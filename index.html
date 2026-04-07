@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spice Sphere Bharuch - Material Requisition</title>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background-color: #f0f2f5; padding: 20px; }
+        .container { max-width: 850px; margin: auto; background: #fff; padding: 40px; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border: 1px solid #ccc; }
+        
+        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 25px; }
+        .header-title h1 { color: #1a5d1a; margin: 0; font-size: 26px; }
+        .header-title p { margin: 5px 0 0; font-weight: bold; color: #555; }
+        
+        .req-info { text-align: right; font-size: 14px; }
+        .req-info b { color: #000; }
+
+        .top-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
+        .field label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; }
+        input, select { width: 100%; padding: 8px; border: 1px solid #aaa; border-radius: 3px; font-size: 14px; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background-color: #f2f2f2; padding: 10px; border: 1px solid #333; text-align: left; font-size: 13px; }
+        td { padding: 8px; border: 1px solid #333; }
+
+        .btn-add { background-color: #4caf50; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 3px; font-weight: bold; margin-top: 15px; }
+        .btn-remove { background-color: #ff4d4d; color: white; border: none; padding: 4px 8px; cursor: pointer; border-radius: 2px; font-size: 11px; }
+
+        .footer-action { margin-top: 30px; text-align: center; border-top: 1px solid #eee; padding-top: 20px; }
+        .btn-print { background-color: #007bff; color: white; border: none; padding: 12px 30px; cursor: pointer; border-radius: 4px; font-size: 16px; font-weight: bold; }
+
+        /* Signature Section as per your image */
+        .signature-section { display: flex; justify-content: space-between; margin-top: 80px; padding: 0 20px; }
+        .sign-box { width: 250px; text-align: center; }
+        .line { border-top: 1.5px solid #000; margin-bottom: 8px; }
+        .sign-text { font-size: 14px; font-weight: 500; }
+
+        @media print {
+            body { background: white; padding: 0; }
+            .container { box-shadow: none; border: 1px solid #000; }
+            .btn-add, .btn-remove, .btn-print, .footer-action { display: none; }
+            input, select { border: none; padding: 0; appearance: none; -webkit-appearance: none; }
+        }
+    </style>
+</head>
+<body onload="initForm()">
+
+<div class="container">
+    <div class="header">
+        <div class="header-title">
+            <h1> SPICE SPHERE</h1>
+            <p>BHARUCH BRANCH - STORE REQUISITION</p>
+        </div>
+        <div class="req-info">
+            <div>Requisition No: <b id="reqNo">...</b></div>
+            <div>Date: <b id="reqDate"></b></div>
+        </div>
+    </div>
+
+    <div class="top-section">
+        <div class="field">
+            <label>Requested By (Staff Name):</label>
+            <input type="text" placeholder="Enter name">
+        </div>
+        <div class="field">
+            <label>Department:</label>
+            <select>
+                <option>Kitchen</option>
+                <option>Beverage / Barista</option>
+                <option>Service</option>
+                <option>Housekeeping</option>
+            </select>
+        </div>
+    </div>
+
+    <table id="itemsTable">
+        <thead>
+            <tr>
+                <th style="width: 45%;">Item Description</th>
+                <th style="width: 15%;">Quantity</th>
+                <th style="width: 25%;">UOM (Unit)</th>
+                <th style="width: 15%; text-align: center;" class="no-print">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><input type="text" placeholder="Item name"></td>
+                <td><input type="number" step="any" placeholder="0"></td>
+                <td>
+                    <select>
+                        <option value="KG">Kilogram (KG)</option>
+                        <option value="GM">Gram (GM)</option>
+                        <option value="LTR">Litre (LTR)</option>
+                        <option value="ML">Millilitre (ML)</option>
+                        <option value="PCS">Pieces (PCS)</option>
+                        <option value="PKT">Packet (PKT)</option>
+                        <option value="BOX">Box / Case</option>
+                        <option value="NOS">Numbers (NOS)</option>
+                    </select>
+                </td>
+                <td style="text-align: center;" class="no-print">-</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button class="btn-add" onclick="addRow()">+ Add Item Row</button>
+
+    <!-- Signature Section (Image Layout) -->
+    <div class="signature-section">
+        <div class="sign-box">
+            <div class="line"></div>
+            <div class="sign-text">Receiver's Sign</div>
+        </div>
+        <div class="sign-box">
+            <div class="line"></div>
+            <div class="sign-text">Store Keeper's Sign</div>
+        </div>
+    </div>
+
+    <div class="footer-action">
+        <button class="btn-print" onclick="handlePrint()">Print & Save Requisition</button>
+    </div>
+</div>
+
+<script>
+    function initForm() {
+        const now = new Date();
+        const dateStr = now.toISOString().slice(0, 10).replace(/-/g, "");
+        
+        let lastNum = localStorage.getItem('vcb_last_num') || 0;
+        let lastDate = localStorage.getItem('vcb_last_date') || "";
+
+        let currentNum;
+        if (lastDate === dateStr) {
+            currentNum = parseInt(lastNum) + 1;
+        } else {
+            currentNum = 1;
+        }
+
+        const formattedNo = "SSB-" + dateStr + "-" + currentNum.toString().padStart(3, '0');
+        document.getElementById('reqNo').innerText = formattedNo;
+        document.getElementById('reqDate').innerText = now.toLocaleDateString('en-GB');
+
+        // Store temporary values
+        window.tempData = { num: currentNum, date: dateStr };
+    }
+
+    function addRow() {
+        const tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
+        const row = tbody.insertRow();
+        row.innerHTML = `
+            <td><input type="text" placeholder="Item name"></td>
+            <td><input type="number" step="any" placeholder="0"></td>
+            <td>
+                <select>
+                    <option value="KG">KG</option><option value="GM">GM</option>
+                    <option value="LTR">LTR</option><option value="ML">ML</option>
+                    <option value="PCS">PCS</option><option value="PKT">PKT</option>
+                    <option value="BOX">BOX</option><option value="NOS">NOS</option>
+                </select>
+            </td>
+            <td style="text-align: center;"><button class="btn-remove" onclick="this.parentElement.parentElement.remove()">X</button></td>
+        `;
+    }
+
+    function handlePrint() {
+        window.print();
+        // Print ke baad number save karein
+        localStorage.setItem('vcb_last_num', window.tempData.num);
+        localStorage.setItem('vcb_last_date', window.tempData.date);
+        
+        setTimeout(() => {
+            if(confirm("Next Requisition form load karein?")) {
+                location.reload();
+            }
+        }, 500);
+    }
+</script>
+
+</body>
+</html>
