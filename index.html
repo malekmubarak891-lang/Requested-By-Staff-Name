@@ -6,7 +6,7 @@
     <title>Spice Sphere - Store Requisition</title>
     <style>
         :root {
-            --primary-color: #d35400; /* Spice Orange */
+            --primary-color: #d35400;
             --secondary-color: #2c3e50;
             --bg-color: #f4f7f6;
             --border-color: #333;
@@ -21,11 +21,11 @@
         }
 
         .container { 
-            max-width: 800px; /* Reduced slightly to ensure it fits A4 with margins */
+            max-width: 900px; 
             margin: auto; 
             background: #fff; 
-            padding: 30px; 
-            border-radius: 8px; 
+            padding: 40px; 
+            border-radius: 4px; 
             box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
             border: 1px solid #ddd; 
             box-sizing: border-box;
@@ -35,84 +35,87 @@
             display: flex; 
             justify-content: space-between; 
             align-items: flex-start;
-            border-bottom: 3px solid var(--primary-color); 
-            padding-bottom: 15px; 
-            margin-bottom: 25px; 
+            border-bottom: 2px solid #000; 
+            padding-bottom: 10px; 
+            margin-bottom: 20px; 
         }
 
         .header-title h1 { 
             color: var(--primary-color); 
             margin: 0; 
-            font-size: 28px; 
+            font-size: 32px; 
             letter-spacing: 1px;
-            text-transform: uppercase;
+            font-weight: 800;
         }
 
         .header-title p { 
             margin: 5px 0 0; 
             font-weight: bold; 
             color: var(--secondary-color); 
-            font-size: 13px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
         }
         
         .req-info { 
             text-align: right; 
-            font-size: 13px; 
-            line-height: 1.4;
+            font-size: 14px; 
+            line-height: 1.6;
         }
 
-        .req-info b { color: #000; font-size: 15px; }
+        .req-info b { color: #000; font-size: 16px; }
 
         .top-section { 
             display: grid; 
             grid-template-columns: 1fr 1fr 1fr; 
-            gap: 15px; 
-            margin-bottom: 25px; 
+            gap: 20px; 
+            margin-bottom: 30px; 
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
         }
 
         .field label { 
             display: block; 
             font-weight: bold; 
-            margin-bottom: 5px; 
-            font-size: 12px; 
-            color: #555;
+            margin-bottom: 8px; 
+            font-size: 13px; 
+            color: #000;
         }
 
         input, select { 
             width: 100%; 
-            padding: 8px; 
-            border: 1px solid #ccc; 
-            border-radius: 4px; 
-            font-size: 13px; 
+            padding: 8px 0; 
+            border: none;
+            border-bottom: 1px solid #ccc;
+            font-size: 14px; 
             box-sizing: border-box;
+            background: transparent;
         }
 
-        input:focus, select:focus {
+        input:focus {
             outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 5px rgba(211, 84, 0, 0.2);
+            border-bottom: 2px solid var(--primary-color);
         }
 
         table { 
             width: 100%; 
             border-collapse: collapse; 
             margin-top: 10px; 
-            table-layout: fixed; /* Ensures table stays within container bounds */
         }
 
         th { 
-            background-color: #f8f9fa; 
-            padding: 10px; 
-            border: 1px solid var(--border-color); 
+            background-color: #fff; 
+            padding: 12px 8px; 
+            border: 1.5px solid #000; 
             text-align: left; 
-            font-size: 11px; 
+            font-size: 12px; 
+            font-weight: 800;
             text-transform: uppercase;
         }
 
         td { 
-            padding: 6px; 
-            border: 1px solid var(--border-color); 
-            font-size: 13px;
+            padding: 8px; 
+            border: 1px solid #000; 
+            font-size: 14px;
         }
 
         .btn-add { 
@@ -124,10 +127,7 @@
             border-radius: 4px; 
             font-weight: bold; 
             margin-top: 15px; 
-            transition: background 0.2s;
         }
-
-        .btn-add:hover { background-color: #219150; }
 
         .btn-remove { 
             background-color: #e74c3c; 
@@ -139,75 +139,59 @@
             font-size: 11px; 
         }
 
-        /* Signature Section */
         .signature-section { 
             display: flex; 
             justify-content: space-between; 
-            margin-top: 60px; 
-            padding: 0 5px; 
+            margin-top: 80px; 
         }
 
-        .sign-box { 
-            width: 30%; 
-            text-align: center; 
-        }
-
-        .line { 
-            border-top: 1.5px solid #000; 
-            margin-bottom: 8px; 
-        }
-
-        .sign-text { 
-            font-size: 12px; 
-            font-weight: 600; 
-            color: #333;
-        }
+        .sign-box { width: 30%; text-align: center; }
+        .line { border-top: 1.5px solid #000; margin-bottom: 10px; }
+        .sign-text { font-size: 13px; font-weight: bold; color: #000; }
 
         .footer-action { 
-            margin-top: 30px; 
+            margin-top: 40px; 
             text-align: center; 
             border-top: 1px solid #eee; 
-            padding-top: 20px; 
+            padding-top: 25px; 
         }
 
         .btn-print { 
             background-color: var(--secondary-color); 
             color: white; 
             border: none; 
-            padding: 14px 40px; 
+            padding: 15px 50px; 
             cursor: pointer; 
-            border-radius: 6px; 
+            border-radius: 4px; 
             font-size: 16px; 
             font-weight: bold; 
+            transition: all 0.3s;
         }
 
-        /* Custom Modal for Alerts */
-        #customModal {
-            display: none;
+        #loadingOverlay {
+            display: flex;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            z-index: 1000;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 999;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(255,255,255,0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
         }
 
+        .status-dot {
+            height: 8px;
+            width: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        /* --- PRINT OPTIMIZATIONS --- */
         @media print {
-            @page {
-                size: A4;
-                margin: 10mm; /* Standard margin to prevent cutting */
+            @page { 
+                size: A4; 
+                margin: 10mm; /* मार्जिन को कम किया ताकि कंटेंट न कटे */
             }
             body { 
                 background: white; 
@@ -215,59 +199,71 @@
                 margin: 0; 
             }
             .container { 
-                box-shadow: none; 
-                border: 1px solid #000; 
-                width: 100%; 
-                max-width: 100%; 
-                margin: 0; 
-                padding: 20px;
+                box-shadow: none !important; 
+                border: none !important; 
+                width: 100% !important; 
+                max-width: 100% !important; 
+                margin: 0 !important; 
+                padding: 10px !important; 
             }
-            .btn-add, .btn-remove, .btn-print, .footer-action, .no-print { 
+            .btn-add, .btn-remove, .btn-print, .footer-action, .no-print, #loadingOverlay { 
                 display: none !important; 
             }
             input, select { 
                 border: none !important; 
-                padding: 0 !important; 
+                border-bottom: 1px solid #000 !important; /* प्रिंट में लाइन दिखनी चाहिए */
                 appearance: none !important; 
-                -webkit-appearance: none !important; 
-                background: transparent; 
-                font-size: 13px !important;
+                padding: 2px 0 !important;
             }
-            .header { border-bottom: 2px solid #000; }
-            th { background-color: #eee !important; color: #000; border: 1px solid #000; }
-            td { border: 1px solid #000; }
-            .line { border-top: 1.5px solid #000; }
+            th { 
+                border: 1.5px solid #000 !important; 
+                background-color: #eee !important; /* हल्का सा ग्रे शेड */
+                -webkit-print-color-adjust: exact;
+            }
+            td { 
+                border: 1px solid #000 !important; 
+            }
+            .signature-section {
+                margin-top: 50px; /* थोड़ा कम स्पेस */
+            }
         }
     </style>
 </head>
-<body onload="initForm()">
+<body onload="initApp()">
+
+<!-- लोडिंग स्क्रीन: क्लाउड सिंक होने तक दिखेगी -->
+<div id="loadingOverlay">
+    <h2 style="color: var(--primary-color);">Spice Sphere</h2>
+    <p id="loadingText">Connecting to Cloud...</p>
+</div>
 
 <div class="container">
-    <!-- Header -->
     <div class="header">
         <div class="header-title">
             <h1>SPICE SPHERE</h1>
             <p>MATERIAL REQUISITION FORM</p>
         </div>
         <div class="req-info">
-            <div>Requisition No: <b id="reqNoDisplay">SSB-01</b></div>
+            <div>Requisition No: <b id="reqNoDisplay">...</b></div>
             <div>Generated On: <span id="currentTimestamp"></span></div>
+            <div id="statusLabel" class="no-print" style="font-size: 11px; margin-top: 5px;">
+                <span class="status-dot" style="background: #ccc;"></span> Checking Cloud...
+            </div>
         </div>
     </div>
 
-    <!-- Top Fields -->
     <div class="top-section">
         <div class="field">
             <label>Request Date:</label>
-            <input type="date" id="reqDateInput" onchange="validateDate(this)">
+            <input type="date" id="reqDateInput">
         </div>
         <div class="field">
             <label>Staff Name / Requested By:</label>
-            <input type="text" placeholder="e.g. Rahul Sharma">
+            <input type="text" id="staffName" placeholder="e.g. Rahul Sharma">
         </div>
         <div class="field">
             <label>Department:</label>
-            <select>
+            <select id="department">
                 <option>Main Kitchen</option>
                 <option>Bakery & Pastry</option>
                 <option>Beverage (Barista/Bar)</option>
@@ -278,15 +274,14 @@
         </div>
     </div>
 
-    <!-- Items Table -->
     <table id="itemsTable">
         <thead>
             <tr>
-                <th style="width: 12%;">SR NO</th>
-                <th style="width: 41%;">Item Description</th>
-                <th style="width: 15%;">Quantity</th>
-                <th style="width: 20%;">UOM (Unit)</th>
-                <th style="width: 12%; text-align: center;" class="no-print">Action</th>
+                <th style="width: 8%;">#</th>
+                <th style="width: 50%;">ITEM DESCRIPTION</th>
+                <th style="width: 15%;">QUANTITY</th>
+                <th style="width: 20%;">UOM (UNIT)</th>
+                <th style="width: 7%; text-align: center;" class="no-print">X</th>
             </tr>
         </thead>
         <tbody>
@@ -302,9 +297,7 @@
                         <option value="ML">Millilitre (ML)</option>
                         <option value="PCS">Pieces (PCS)</option>
                         <option value="PKT">Packet (PKT)</option>
-                        <option value="BOX">Box / Case</option>
-                        <option value="NOS">Numbers (NOS)</option>
-                        <option value="BTL">Bottle (BTL)</option>
+                        <option value="BOX">BOX (BOX)</option>
                     </select>
                 </td>
                 <td style="text-align: center;" class="no-print">—</td>
@@ -312,87 +305,130 @@
         </tbody>
     </table>
 
-    <button class="btn-add no-print" onclick="addRow()">+ Add New Item</button>
+    <button class="btn-add no-print" onclick="addRow()">+ Add Item</button>
 
-    <!-- Signatures -->
     <div class="signature-section">
-        <div class="sign-box">
-            <div class="line"></div>
-            <div class="sign-text">Requested By</div>
-        </div>
-        <div class="sign-box">
-            <div class="line"></div>
-            <div class="sign-text">Department Head</div>
-        </div>
-        <div class="sign-box">
-            <div class="line"></div>
-            <div class="sign-text">Store Keeper</div>
-        </div>
+        <div class="sign-box"><div class="line"></div><div class="sign-text">Requested By</div></div>
+        <div class="sign-box"><div class="line"></div><div class="sign-text">Department Head</div></div>
+        <div class="sign-box"><div class="line"></div><div class="sign-text">Store Keeper</div></div>
     </div>
 
-    <!-- Actions -->
     <div class="footer-action no-print">
-        <button class="btn-print" onclick="handlePrintAndSave()">Print & Record Requisition</button>
+        <button class="btn-print" id="printBtn" onclick="handlePrintAndSave()" disabled>Connecting...</button>
     </div>
 </div>
 
-<!-- Modal UI -->
-<div class="modal-overlay" id="overlay"></div>
-<div id="customModal">
-    <h3 id="modalTitle">Success</h3>
-    <p id="modalMsg">Requisition has been saved.</p>
-    <button class="btn-add" onclick="closeModal()">OK</button>
-</div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-<script>
-    let currentNumber = 1;
+    const firebaseConfig = {
+        apiKey: "AIzaSyAaE0jKCO_ftwfjPzWu4j47CkB30CN7laM",
+        authDomain: "spice-sphere.firebaseapp.com",
+        projectId: "spice-sphere",
+        storageBucket: "spice-sphere.firebasestorage.app",
+        messagingSenderId: "40765621287",
+        appId: "1:40765621287:web:b036ce7b2d9ee0e0033a02",
+        measurementId: "G-0X0BHPDTEH"
+    };
 
-    function initForm() {
-        // Set up Date logic
-        const dateInput = document.getElementById('reqDateInput');
-        const today = new Date();
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const dd = String(today.getDate()).padStart(2, '0');
-        
-        const todayStr = `${yyyy}-${mm}-${dd}`;
-        dateInput.value = todayStr;
-        dateInput.max = todayStr; // Block future dates
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const appId = "spice-sphere-v1";
 
-        document.getElementById('currentTimestamp').innerText = today.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+    let currentSequence = 1;
+    let user = null;
+    let syncTimeout;
 
-        // Sequential Numbering Logic
-        let storedNum = localStorage.getItem('spice_sphere_last_num');
-        if (storedNum) {
-            currentNumber = parseInt(storedNum) + 1;
-        } else {
-            currentNumber = 1;
+    async function initApp() {
+        document.getElementById('currentTimestamp').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        document.getElementById('reqDateInput').value = new Date().toISOString().slice(0, 10);
+
+        syncTimeout = setTimeout(() => {
+            if (!user) {
+                console.warn("Cloud connection slow, switching to local...");
+                fallbackToLocal();
+            }
+        }, 5000);
+
+        try {
+            const userCredential = await signInAnonymously(auth);
+            user = userCredential.user;
+            setupSync();
+        } catch (e) {
+            console.error("Auth Error", e);
+            fallbackToLocal();
         }
-        
-        updateNumberDisplay();
     }
 
-    function updateNumberDisplay() {
-        const formatted = "SSB-" + currentNumber.toString().padStart(2, '0');
+    function setupSync() {
+        const counterRef = doc(db, 'artifacts', appId, 'public', 'data', 'counters', 'req_num');
+        
+        onSnapshot(counterRef, (snapshot) => {
+            clearTimeout(syncTimeout);
+            if (snapshot.exists()) {
+                currentSequence = (snapshot.data().lastNumber || 0) + 1;
+            } else {
+                currentSequence = 1;
+                setDoc(counterRef, { lastNumber: 0 }).catch(err => console.error("Initial doc error", err));
+            }
+            updateUI(true);
+        }, (err) => {
+            console.error("Firestore Error:", err);
+            fallbackToLocal();
+        });
+    }
+
+    function fallbackToLocal() {
+        clearTimeout(syncTimeout);
+        let localNum = localStorage.getItem('spice_sphere_seq') || 0;
+        currentSequence = parseInt(localNum) + 1;
+        updateUI(false);
+    }
+
+    function updateUI(isCloud) {
+        const formatted = "SSB-" + currentSequence.toString().padStart(2, '0');
         document.getElementById('reqNoDisplay').innerText = formatted;
-    }
-
-    function validateDate(input) {
-        const selectedDate = new Date(input.value);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        if (selectedDate > today) {
-            showModal("Invalid Date", "Future dates are not allowed. Please select today or a past date.");
-            input.value = new Date().toISOString().slice(0, 10);
+        document.getElementById('loadingOverlay').style.display = 'none';
+        document.getElementById('printBtn').disabled = false;
+        document.getElementById('printBtn').innerText = "Confirm & Print Requisition";
+        
+        const status = document.getElementById('statusLabel');
+        if(isCloud) {
+            status.innerHTML = '<span class="status-dot" style="background: #27ae60;"></span> Cloud Connected';
+            status.style.color = "#27ae60";
+        } else {
+            status.innerHTML = '<span class="status-dot" style="background: #e67e22;"></span> Offline Mode';
+            status.style.color = "#e67e22";
         }
     }
 
-    function addRow() {
+    window.handlePrintAndSave = async function() {
+        // प्रिंट से पहले टाइमस्टैम्प अपडेट करें
+        document.getElementById('currentTimestamp').innerText = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        
+        window.print();
+        
+        if (user) {
+            const counterRef = doc(db, 'artifacts', appId, 'public', 'data', 'counters', 'req_num');
+            try {
+                await setDoc(counterRef, { lastNumber: currentSequence });
+            } catch (e) {
+                localStorage.setItem('spice_sphere_seq', currentSequence);
+            }
+        } else {
+            localStorage.setItem('spice_sphere_seq', currentSequence);
+            currentSequence++;
+            updateUI(false);
+        }
+    };
+
+    window.addRow = function() {
         const table = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
         const rowCount = table.rows.length;
         const row = table.insertRow();
-        
         row.innerHTML = `
             <td style="text-align: center;">${rowCount + 1}</td>
             <td><input type="text" placeholder="Enter item name..."></td>
@@ -402,50 +438,23 @@
                     <option value="KG">KG</option><option value="GM">GM</option>
                     <option value="LTR">LTR</option><option value="ML">ML</option>
                     <option value="PCS">PCS</option><option value="PKT">PKT</option>
-                    <option value="BOX">BOX</option><option value="NOS">NOS</option>
-                    <option value="BTL">BTL</option>
+                    <option value="BOX">BOX</option>
                 </select>
             </td>
             <td style="text-align: center;" class="no-print">
-                <button class="btn-remove" onclick="removeRow(this)">Remove</button>
+                <button class="btn-remove" onclick="this.closest('tr').remove(); reorderRows();">X</button>
             </td>
         `;
-    }
+    };
 
-    function removeRow(btn) {
-        btn.closest('tr').remove();
-        // Update row numbers
+    window.reorderRows = function() {
         const rows = document.getElementById("itemsTable").getElementsByTagName('tbody')[0].rows;
         for (let i = 0; i < rows.length; i++) {
             rows[i].cells[0].innerText = i + 1;
         }
-    }
+    };
 
-    function handlePrintAndSave() {
-        window.print();
-        
-        // Save current number to localStorage
-        localStorage.setItem('spice_sphere_last_num', currentNumber);
-        
-        setTimeout(() => {
-            showModal("Requisition Saved", `Form ${document.getElementById('reqNoDisplay').innerText} has been processed. Starting next sequence.`);
-            // Prepare for next
-            currentNumber++;
-            updateNumberDisplay();
-        }, 1000);
-    }
-
-    function showModal(title, msg) {
-        document.getElementById('modalTitle').innerText = title;
-        document.getElementById('modalMsg').innerText = msg;
-        document.getElementById('customModal').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
-    }
-
-    function closeModal() {
-        document.getElementById('customModal').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
-    }
+    window.initApp = initApp;
 </script>
 
 </body>
