@@ -3,89 +3,297 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spice Sphere Bharuch - Material Requisition</title>
+    <title>Spice Sphere - Store Requisition</title>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 0; background-color: #f0f2f5; padding: 20px; }
-        .container { max-width: 850px; margin: auto; background: #fff; padding: 40px; border-radius: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border: 1px solid #ccc; }
+        :root {
+            --primary-color: #d35400; /* Spice Orange */
+            --secondary-color: #2c3e50;
+            --bg-color: #f4f7f6;
+            --border-color: #333;
+        }
+
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            margin: 0; 
+            background-color: var(--bg-color); 
+            padding: 20px; 
+            color: #333;
+        }
+
+        .container { 
+            max-width: 800px; /* Reduced slightly to ensure it fits A4 with margins */
+            margin: auto; 
+            background: #fff; 
+            padding: 30px; 
+            border-radius: 8px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+            border: 1px solid #ddd; 
+            box-sizing: border-box;
+        }
         
-        .header { display: flex; justify-content: space-between; border-bottom: 2px solid #333; padding-bottom: 15px; margin-bottom: 25px; }
-        .header-title h1 { color: #1a5d1a; margin: 0; font-size: 26px; }
-        .header-title p { margin: 5px 0 0; font-weight: bold; color: #555; }
+        .header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start;
+            border-bottom: 3px solid var(--primary-color); 
+            padding-bottom: 15px; 
+            margin-bottom: 25px; 
+        }
+
+        .header-title h1 { 
+            color: var(--primary-color); 
+            margin: 0; 
+            font-size: 28px; 
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .header-title p { 
+            margin: 5px 0 0; 
+            font-weight: bold; 
+            color: var(--secondary-color); 
+            font-size: 13px;
+        }
         
-        .req-info { text-align: right; font-size: 14px; }
-        .req-info b { color: #000; }
+        .req-info { 
+            text-align: right; 
+            font-size: 13px; 
+            line-height: 1.4;
+        }
 
-        .top-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px; }
-        .field label { display: block; font-weight: bold; margin-bottom: 5px; font-size: 13px; }
-        input, select { width: 100%; padding: 8px; border: 1px solid #aaa; border-radius: 3px; font-size: 14px; }
+        .req-info b { color: #000; font-size: 15px; }
 
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th { background-color: #f2f2f2; padding: 10px; border: 1px solid #333; text-align: left; font-size: 13px; }
-        td { padding: 8px; border: 1px solid #333; }
+        .top-section { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr 1fr; 
+            gap: 15px; 
+            margin-bottom: 25px; 
+        }
 
-        .btn-add { background-color: #4caf50; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 3px; font-weight: bold; margin-top: 15px; }
-        .btn-remove { background-color: #ff4d4d; color: white; border: none; padding: 4px 8px; cursor: pointer; border-radius: 2px; font-size: 11px; }
+        .field label { 
+            display: block; 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+            font-size: 12px; 
+            color: #555;
+        }
 
-        .footer-action { margin-top: 30px; text-align: center; border-top: 1px solid #eee; padding-top: 20px; }
-        .btn-print { background-color: #007bff; color: white; border: none; padding: 12px 30px; cursor: pointer; border-radius: 4px; font-size: 16px; font-weight: bold; }
+        input, select { 
+            width: 100%; 
+            padding: 8px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            font-size: 13px; 
+            box-sizing: border-box;
+        }
 
-        /* Signature Section as per your image */
-        .signature-section { display: flex; justify-content: space-between; margin-top: 80px; padding: 0 20px; }
-        .sign-box { width: 250px; text-align: center; }
-        .line { border-top: 1.5px solid #000; margin-bottom: 8px; }
-        .sign-text { font-size: 14px; font-weight: 500; }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(211, 84, 0, 0.2);
+        }
+
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            margin-top: 10px; 
+            table-layout: fixed; /* Ensures table stays within container bounds */
+        }
+
+        th { 
+            background-color: #f8f9fa; 
+            padding: 10px; 
+            border: 1px solid var(--border-color); 
+            text-align: left; 
+            font-size: 11px; 
+            text-transform: uppercase;
+        }
+
+        td { 
+            padding: 6px; 
+            border: 1px solid var(--border-color); 
+            font-size: 13px;
+        }
+
+        .btn-add { 
+            background-color: #27ae60; 
+            color: white; 
+            border: none; 
+            padding: 10px 20px; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-weight: bold; 
+            margin-top: 15px; 
+            transition: background 0.2s;
+        }
+
+        .btn-add:hover { background-color: #219150; }
+
+        .btn-remove { 
+            background-color: #e74c3c; 
+            color: white; 
+            border: none; 
+            padding: 4px 8px; 
+            cursor: pointer; 
+            border-radius: 4px; 
+            font-size: 11px; 
+        }
+
+        /* Signature Section */
+        .signature-section { 
+            display: flex; 
+            justify-content: space-between; 
+            margin-top: 60px; 
+            padding: 0 5px; 
+        }
+
+        .sign-box { 
+            width: 30%; 
+            text-align: center; 
+        }
+
+        .line { 
+            border-top: 1.5px solid #000; 
+            margin-bottom: 8px; 
+        }
+
+        .sign-text { 
+            font-size: 12px; 
+            font-weight: 600; 
+            color: #333;
+        }
+
+        .footer-action { 
+            margin-top: 30px; 
+            text-align: center; 
+            border-top: 1px solid #eee; 
+            padding-top: 20px; 
+        }
+
+        .btn-print { 
+            background-color: var(--secondary-color); 
+            color: white; 
+            border: none; 
+            padding: 14px 40px; 
+            cursor: pointer; 
+            border-radius: 6px; 
+            font-size: 16px; 
+            font-weight: bold; 
+        }
+
+        /* Custom Modal for Alerts */
+        #customModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            z-index: 1000;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+        }
 
         @media print {
-            body { background: white; padding: 0; }
-            .container { box-shadow: none; border: 1px solid #000; }
-            .btn-add, .btn-remove, .btn-print, .footer-action { display: none; }
-            input, select { border: none; padding: 0; appearance: none; -webkit-appearance: none; }
+            @page {
+                size: A4;
+                margin: 10mm; /* Standard margin to prevent cutting */
+            }
+            body { 
+                background: white; 
+                padding: 0; 
+                margin: 0; 
+            }
+            .container { 
+                box-shadow: none; 
+                border: 1px solid #000; 
+                width: 100%; 
+                max-width: 100%; 
+                margin: 0; 
+                padding: 20px;
+            }
+            .btn-add, .btn-remove, .btn-print, .footer-action, .no-print { 
+                display: none !important; 
+            }
+            input, select { 
+                border: none !important; 
+                padding: 0 !important; 
+                appearance: none !important; 
+                -webkit-appearance: none !important; 
+                background: transparent; 
+                font-size: 13px !important;
+            }
+            .header { border-bottom: 2px solid #000; }
+            th { background-color: #eee !important; color: #000; border: 1px solid #000; }
+            td { border: 1px solid #000; }
+            .line { border-top: 1.5px solid #000; }
         }
     </style>
 </head>
 <body onload="initForm()">
 
 <div class="container">
+    <!-- Header -->
     <div class="header">
         <div class="header-title">
-            <h1> SPICE SPHERE</h1>
-            <p>BHARUCH BRANCH - STORE REQUISITION</p>
+            <h1>SPICE SPHERE</h1>
+            <p>MATERIAL REQUISITION FORM</p>
         </div>
         <div class="req-info">
-            <div>Requisition No: <b id="reqNo">...</b></div>
-            <div>Date: <b id="reqDate"></b></div>
+            <div>Requisition No: <b id="reqNoDisplay">SSB-01</b></div>
+            <div>Generated On: <span id="currentTimestamp"></span></div>
         </div>
     </div>
 
+    <!-- Top Fields -->
     <div class="top-section">
         <div class="field">
-            <label>Requested By (Staff Name):</label>
-            <input type="text" placeholder="Enter name">
+            <label>Request Date:</label>
+            <input type="date" id="reqDateInput" onchange="validateDate(this)">
+        </div>
+        <div class="field">
+            <label>Staff Name / Requested By:</label>
+            <input type="text" placeholder="e.g. Rahul Sharma">
         </div>
         <div class="field">
             <label>Department:</label>
             <select>
-                <option>Kitchen</option>
-                <option>Beverage / Barista</option>
-                <option>Service</option>
+                <option>Main Kitchen</option>
+                <option>Bakery & Pastry</option>
+                <option>Beverage (Barista/Bar)</option>
+                <option>Service / Front of House</option>
                 <option>Housekeeping</option>
+                <option>Maintenance</option>
             </select>
         </div>
     </div>
 
+    <!-- Items Table -->
     <table id="itemsTable">
         <thead>
             <tr>
-                <th style="width: 45%;">Item Description</th>
+                <th style="width: 12%;">SR NO</th>
+                <th style="width: 41%;">Item Description</th>
                 <th style="width: 15%;">Quantity</th>
-                <th style="width: 25%;">UOM (Unit)</th>
-                <th style="width: 15%; text-align: center;" class="no-print">Action</th>
+                <th style="width: 20%;">UOM (Unit)</th>
+                <th style="width: 12%; text-align: center;" class="no-print">Action</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td><input type="text" placeholder="Item name"></td>
-                <td><input type="number" step="any" placeholder="0"></td>
+                <td style="text-align: center;">1</td>
+                <td><input type="text" placeholder="Enter item name..."></td>
+                <td><input type="number" step="any" placeholder="0.00"></td>
                 <td>
                     <select>
                         <option value="KG">Kilogram (KG)</option>
@@ -96,84 +304,147 @@
                         <option value="PKT">Packet (PKT)</option>
                         <option value="BOX">Box / Case</option>
                         <option value="NOS">Numbers (NOS)</option>
+                        <option value="BTL">Bottle (BTL)</option>
                     </select>
                 </td>
-                <td style="text-align: center;" class="no-print">-</td>
+                <td style="text-align: center;" class="no-print">—</td>
             </tr>
         </tbody>
     </table>
 
-    <button class="btn-add" onclick="addRow()">+ Add Item Row</button>
+    <button class="btn-add no-print" onclick="addRow()">+ Add New Item</button>
 
-    <!-- Signature Section (Image Layout) -->
+    <!-- Signatures -->
     <div class="signature-section">
         <div class="sign-box">
             <div class="line"></div>
-            <div class="sign-text">Receiver's Sign</div>
+            <div class="sign-text">Requested By</div>
         </div>
         <div class="sign-box">
             <div class="line"></div>
-            <div class="sign-text">Store Keeper's Sign</div>
+            <div class="sign-text">Department Head</div>
+        </div>
+        <div class="sign-box">
+            <div class="line"></div>
+            <div class="sign-text">Store Keeper</div>
         </div>
     </div>
 
-    <div class="footer-action">
-        <button class="btn-print" onclick="handlePrint()">Print & Save Requisition</button>
+    <!-- Actions -->
+    <div class="footer-action no-print">
+        <button class="btn-print" onclick="handlePrintAndSave()">Print & Record Requisition</button>
     </div>
 </div>
 
+<!-- Modal UI -->
+<div class="modal-overlay" id="overlay"></div>
+<div id="customModal">
+    <h3 id="modalTitle">Success</h3>
+    <p id="modalMsg">Requisition has been saved.</p>
+    <button class="btn-add" onclick="closeModal()">OK</button>
+</div>
+
 <script>
+    let currentNumber = 1;
+
     function initForm() {
-        const now = new Date();
-        const dateStr = now.toISOString().slice(0, 10).replace(/-/g, "");
+        // Set up Date logic
+        const dateInput = document.getElementById('reqDateInput');
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
         
-        let lastNum = localStorage.getItem('vcb_last_num') || 0;
-        let lastDate = localStorage.getItem('vcb_last_date') || "";
+        const todayStr = `${yyyy}-${mm}-${dd}`;
+        dateInput.value = todayStr;
+        dateInput.max = todayStr; // Block future dates
 
-        let currentNum;
-        if (lastDate === dateStr) {
-            currentNum = parseInt(lastNum) + 1;
+        document.getElementById('currentTimestamp').innerText = today.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+
+        // Sequential Numbering Logic
+        let storedNum = localStorage.getItem('spice_sphere_last_num');
+        if (storedNum) {
+            currentNumber = parseInt(storedNum) + 1;
         } else {
-            currentNum = 1;
+            currentNumber = 1;
         }
+        
+        updateNumberDisplay();
+    }
 
-        const formattedNo = "SSB-" + dateStr + "-" + currentNum.toString().padStart(3, '0');
-        document.getElementById('reqNo').innerText = formattedNo;
-        document.getElementById('reqDate').innerText = now.toLocaleDateString('en-GB');
+    function updateNumberDisplay() {
+        const formatted = "SSB-" + currentNumber.toString().padStart(2, '0');
+        document.getElementById('reqNoDisplay').innerText = formatted;
+    }
 
-        // Store temporary values
-        window.tempData = { num: currentNum, date: dateStr };
+    function validateDate(input) {
+        const selectedDate = new Date(input.value);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate > today) {
+            showModal("Invalid Date", "Future dates are not allowed. Please select today or a past date.");
+            input.value = new Date().toISOString().slice(0, 10);
+        }
     }
 
     function addRow() {
-        const tbody = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
-        const row = tbody.insertRow();
+        const table = document.getElementById("itemsTable").getElementsByTagName('tbody')[0];
+        const rowCount = table.rows.length;
+        const row = table.insertRow();
+        
         row.innerHTML = `
-            <td><input type="text" placeholder="Item name"></td>
-            <td><input type="number" step="any" placeholder="0"></td>
+            <td style="text-align: center;">${rowCount + 1}</td>
+            <td><input type="text" placeholder="Enter item name..."></td>
+            <td><input type="number" step="any" placeholder="0.00"></td>
             <td>
                 <select>
                     <option value="KG">KG</option><option value="GM">GM</option>
                     <option value="LTR">LTR</option><option value="ML">ML</option>
                     <option value="PCS">PCS</option><option value="PKT">PKT</option>
                     <option value="BOX">BOX</option><option value="NOS">NOS</option>
+                    <option value="BTL">BTL</option>
                 </select>
             </td>
-            <td style="text-align: center;"><button class="btn-remove" onclick="this.parentElement.parentElement.remove()">X</button></td>
+            <td style="text-align: center;" class="no-print">
+                <button class="btn-remove" onclick="removeRow(this)">Remove</button>
+            </td>
         `;
     }
 
-    function handlePrint() {
+    function removeRow(btn) {
+        btn.closest('tr').remove();
+        // Update row numbers
+        const rows = document.getElementById("itemsTable").getElementsByTagName('tbody')[0].rows;
+        for (let i = 0; i < rows.length; i++) {
+            rows[i].cells[0].innerText = i + 1;
+        }
+    }
+
+    function handlePrintAndSave() {
         window.print();
-        // Print ke baad number save karein
-        localStorage.setItem('vcb_last_num', window.tempData.num);
-        localStorage.setItem('vcb_last_date', window.tempData.date);
+        
+        // Save current number to localStorage
+        localStorage.setItem('spice_sphere_last_num', currentNumber);
         
         setTimeout(() => {
-            if(confirm("Next Requisition form load karein?")) {
-                location.reload();
-            }
-        }, 500);
+            showModal("Requisition Saved", `Form ${document.getElementById('reqNoDisplay').innerText} has been processed. Starting next sequence.`);
+            // Prepare for next
+            currentNumber++;
+            updateNumberDisplay();
+        }, 1000);
+    }
+
+    function showModal(title, msg) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalMsg').innerText = msg;
+        document.getElementById('customModal').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('customModal').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
     }
 </script>
 
